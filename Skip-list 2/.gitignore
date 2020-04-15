@@ -1,0 +1,9 @@
+# LaTeX
+*.aux
+*.log
+*.out
+*.pdf
+*~
+Theory/main.synctex.gz
+*.csv
+Programming/__pycache__/skiplist.cpython-36.pyc

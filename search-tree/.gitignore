@@ -1,0 +1,9 @@
+# Autosave
+*~
+
+# LaTeX
+*.aux
+*.log
+*.out
+*.pdf
+main.synctex.gz

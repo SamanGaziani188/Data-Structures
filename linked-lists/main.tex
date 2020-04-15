@@ -1,0 +1,281 @@
+\documentclass[addpoints]{exam}
+
+\usepackage{pseudocode}
+
+% Header and footer.
+\pagestyle{headandfoot}
+\runningheadrule
+\runningfootrule
+\runningheader{CS 201 DS II}{Homework 1}{Spring 2018}
+\runningfooter{}{Page \thepage\ of \numpages}{}
+\firstpageheader{}{}{}
+
+\qformat{{\large\bf \thequestiontitle}\hfill[\totalpoints\ points]}
+\boxedpoints
+\printanswers
+
+\title{\textbf{Habib University}\\\textbf{CS 201 Data Structures II}\\\textbf{Spring 2018}}
+\author{\textbf{\textit{Emad Bin Abid \& Saman Gaziani}}\\\textit{$Team: hw-1-ea02893-sg02494-1$}}
+\date{\textbf{Homework 1}\\\textbf{January 29, 2018}}
+
+\begin{document}
+\maketitle
+
+	\begin{questions}
+	
+	\titledquestion{Exercise 2.1*}[10]
+	
+	The List method {\tt add\textunderscore all(i, c)} inserts all elements of the Collection {\tt c} into the list at position {\tt i}. (The {\tt add(i, x)} method is a special case where {\tt c = \{x\}}.)
+	
+	Explain why, for the data structures in Chapter 2, it is not efficient to implement {\tt add\textunderscore all(i,c)} by repeated calls to {\tt add(i, x)}. Design a more efficient implementation.
+	\begin{solution}
+		In chapter 2, all the data structures are array based. This means that the length of data structure can neither be enlarged nor be shortened dynamically. In order to increase or decrease the array-size, we use a \textit{backing array concept} on the back-end. In some cases resize() operation is called on array. If we wish to transfer all the elements of Collection 'c' into an array 'a' at an index 'i', it would cost a lot. The add() function will make internally shift n-i elements to the right to make a space for a single element at index i. The process will be repeated unless all the elements in the collection are transferred to \textit{a}. The estimated time of this operation will be O(n\^2). We can always do this job in O(n) hence it is not efficient to use this approach for the given job. Following is more efficient way to perform this task.\\ \\
+		\begin{pseudocode}{EfficientArray}{a, i, c}
+	  	\label{Array}
+	  	\COMMENT{Transfers all the elements from \textit{c} to \textit{a} at index \textit{i}.}\\
+	  	$Assuming that 'n' is the number of elements in \textit{a} 'm' is the number of elements in \textit{c}.$\\ \\
+	  	\PROCEDURE{transfer}{a, c, i}
+		  	\IF len(a) - n \leq m+1 $ \textbf{then} RESIZE(a)$
+		  	\ELSE
+			  	\FOR range \GETS 0 \TO m-1 \DO 
+				  	\BEGIN
+					  	lastValue \GETS a[n-1]\\
+					  	\FOR j \GETS n-1 \TO i \DO
+						  	a[j+m] \GETS a[j]. $ //Shifts all the elements after ith postion to (i+m)th  position$\\	
+					  	a[i] \GETS lastValue \\
+					  	\FOR k \GETS 0 \TO m-1 $ \textbf{do} a[i+k]$ \GETS c[k]
+				  	\END
+		\ENDPROCEDURE
+	  	\end{pseudocode}
+	\end{solution}
+	\pagebreak
+	
+	\titledquestion{Exercise 2.4*}[5]
+	
+	Design a method {\tt rotate(a,r)} that ``rotates'' the array {\tt a} so that {\tt a[i]} moves to {\tt a[(i + r) mod length(a)], for all i $\in$ \{0, ... ,  length(a)\}}.
+	\begin{solution}\\ \\
+		\begin{pseudocode}{Array}{a, r}
+			\label{Array}
+			\COMMENT{Rotates the array 'a' towards right w.r.t. 'r'.}\\
+			$Assuming that 'n' is the length of \textit{a}$\\ \\
+			\PROCEDURE{rotate}{a, r}
+				$r=r\%n$\\
+				\FOR range \GETS 0 \TO r-1 \DO 
+					\BEGIN
+						lastValue \GETS a[n-1]\\
+						\FOR i \GETS n-1 \TO 0 \DO
+							a[i] \GETS a[i-1]\\
+						a[0] \GETS lastValue \\
+					\END\\
+			\ENDPROCEDURE
+		\end{pseudocode}
+	\end{solution}
+	\pagebreak
+	
+	\titledquestion{Exercise 2.5*}[5]
+	
+	Design a method {\tt rotate(r)} that ``rotates'' a List so that list item $i$ becomes list item $(i + r) \bmod n$. When run on an ArrayDeque, or a DualArrayDeque, {\tt rotate(r)} should run in $O(1 + \min{r, n-r})$ time.
+	\begin{solution}\\ \\
+		\begin{pseudocode}{ArrayDeque}{a, r}
+			\label{ArrayDeque}
+			\COMMENT{Rotates the array 'a' towards right w.r.t. 'r'.}\\
+			$Assuming that add\_first(x), add\_last(x), remove\_first() \& remove\_last exist in an$\\$ArrayDeque, \textit{a}.$\\ \\
+			\PROCEDURE{rotate}{a, r}
+				$r=r\%n$\\
+				\IF r \leq {n/2}
+					\THEN 
+						\BEGIN
+							\FOR i \GETS 1 \TO r \DO 
+								add\_first(remove\_last)\\
+						\END\\
+					\ELSE 
+						\BEGIN
+							\FOR j \GETS 1 \TO (n-r) \DO 
+								add\_last(remove\_first)\\
+						\END
+			\ENDPROCEDURE
+		\end{pseudocode}
+	\end{solution}
+	\pagebreak
+	
+	\titledquestion{Exercise 2.8*}[10]
+	
+	Design a variant of ArrayDeque that does not do any modular arithmetic at all. Instead, all the data sits in a consecutive block, in order, inside an array. When the data overruns the beginning or the end of this array, a modified {\tt rebuild()} operation is performed. The amortized cost of all operations should be the same as in an ArrayDeque.
+	
+	{\it Hint}: Getting this to work is really all about how you implement the {\tt rebuild()} operation. You would like {\tt rebuild()} to put the data structure into a state where the data cannot run off either end until at least $n/2$ operations have been performed.
+	\begin{solution}\\ \\
+		\begin{pseudocode}{ArrayDeque}{array}
+			$We start off with rebuilding the list. The rebuild(arr) method increases the size of the list by two$\\$times. The 'n' elements placed in the middle while a room of {n/2} elements left on either side. Due$\\$to space constraint (20 lines) rebuild(arr) has only been implemented for an increasing size;$\\$however it works in the similar way for decreasing size. We assume that initially we have an array$\\$in its rebuilt version i.e. no. of elements = n \& size of array = 2n.$\\ \\
+			\label{ArrayDeque}
+			\PROCEDURE{initialise}{arr}
+				j \GETS {n/2}, k \GETS 3{n/2}$ //global variables.$
+			\ENDPROCEDURE  
+			
+			\PROCEDURE{add\_first}{x}
+				\IF j = 0 $ \textbf{then} rebuild(arr, true)$
+				$ \textbf{else} arr[j]$ \GETS x, j \GETS j-1
+			\ENDPROCEDURE 
+			
+			\PROCEDURE{add\_last}{x}
+			\IF k = (2n-1) $ \textbf{then} rebuild(arr, true)$
+			$ \textbf{else} arr[j]$ \GETS x, k \GETS k+1			
+			\ENDPROCEDURE
+			
+			\PROCEDURE{remove\_first}{}
+				\IF n \leq len(arr) \THEN rebuild(arr, false)
+				\ELSE 
+					j \GETS j+1
+			\ENDPROCEDURE 
+			
+			\PROCEDURE{remove\_last}{}
+				\IF n \leq len(arr) \THEN rebuild(arr, false)
+				\ELSE 
+				k \GETS k-1
+			\ENDPROCEDURE
+			
+			\PROCEDURE{rebuild}{arr, boolean}
+				\IF boolean = true \THEN 
+				\BEGIN 
+				n \GETS len(arr), 
+				newArray \GETS \underline{array}[2n] $ //\underline{array} here means initializing a new array.$\\
+				\FOR i \GETS 0 \TO (3{n/2}) \DO
+						\IF i < {n/2} $ \textbf{then continue}$
+						$ \textbf{else} newArray[i]$ \GETS arr[i-{n/2}]\\
+				\END
+				\ELSE 
+				\BEGIN
+					n \GETS len(arr), 
+					newArray \GETS \underline{array}[n/2] $ //\underline{array} here means initializing a new array.$\\
+					\FOR i \GETS 0 \TO (2n) \DO
+					\IF newArray[i] $ is empty \textbf{then continue}$
+					$ \textbf{else} newArray[i]$ \GETS arr[i]\\
+				\END 
+			\ENDPROCEDURE\\
+		\end{pseudocode}
+	\end{solution}
+	\pagebreak
+	
+	\titledquestion{Exercise 3.1}[10]
+	
+	Why is it not possible to use a dummy node in an SLList to avoid all the special cases that occur in the operations {\tt push(x), pop(), add(x)}, and {\tt remove()}?
+	\begin{solution}
+		We know that with the introduction of a dummy node, we remove the head and tail pointers pointing to the first and last nodes of the SLList respectively. The introduction of dummy node can appear in two ways. Either the dummy node gets added at the \textit{tail} position of SLList or it gets added at the \textit{head} position. Let's discuss both of the scenarios one by one.\\ \\ \textbf{\textit{The Tail-End Scenario:}}\\ There is no point in adding the dummy node towards the tail end of a SLList as it will restrict the occurence of any operation of a SLList, namely; \underline{push(x)}, \underline{pop()}, \underline{add(x)} \& \underline{remove()}. There will be no way left to navigate through the list because when the program runs, we are at a dummy position of our data structure which does not point towards any other node (in non-circular SLList); hence the navigation gets restricted. \\ \\\textbf{\textit{The Head-End Scenario:}}\\ If dummy node is introduced at the head-end of SLList, we are stuck for the special case of \underline{add()} operation. There is no tail for the 'add()' operation to happen and hence if we wish to add towards the tail-end, we will have to traverse through the whole list until we find the node which has a \textit{nullptr} as its next pointer. \\ \\ On the whole, it is not possible to use a dummy node in a SLList for a bunch of reasons. In special cases, we arrive at certain points where the data struture gets restricted to access extreme-end positions. Hence, a SLList is implemented only with the tail and head pointers and not with a single dummy node replacement. 
+	\end{solution}
+	\pagebreak
+	
+	\titledquestion{Exercise 3.2*}[5]
+	
+	Design an SLList method, {\tt second\textunderscore last()}, that returns the second-last element of an SLList. Do this without using the member variable, $n$, that keeps track of the size of the list.
+	\begin{solution}\\ \\
+		\begin{pseudocode}{SLList}{L}
+			\label{SLList}
+			\COMMENT{Returns the second last element of L.}\\
+			$Assuming that 'head' has been declared as the first element of L and 'tail' as the last element of L.$\\ $Moreover, each node has an attribute 'front' which points towards the next node in the SLList L $\\ $and a 'data' attribute which holds the value.$ \\ \\
+			\PROCEDURE{second\_last}{}
+				temp \GETS L.head\\
+				\WHILE temp.front \neq L.tail \DO
+					temp \leftarrow temp.front \\
+				\RETURN{temp.data}
+			\ENDPROCEDURE
+		\end{pseudocode}
+	\end{solution}
+	\pagebreak
+	
+	\titledquestion{Exercise 3.4*}[5]
+	
+	Design an SLList method, {\tt reverse()} that reverses the order of elements in an SLList. This method should run in $O(n)$ time, should not use recursion, should not use any secondary data structures, and should not create any new nodes.
+	\begin{solution}\\ \\
+		\begin{pseudocode}{SLList}{L}
+			\label{SLList}
+			\COMMENT{Reverses the SLList L.}\\
+			$Assuming that 'head' has been declared as the first element of L and 'tail' as the last element of L.$\\ $Moreover, each node has an attribute 'front' which points towards the next node in the SLList L.$\\ $Declaring three variables (pointer-type) as \textit{temp}, \textit{tempPrevious} and \textit{tempNext}.$ \\ \\
+			\PROCEDURE{reverse}{}
+				temp \GETS L.head\\
+				tempNext \GETS temp.front\\
+				tempPrevious \GETS NULL\\
+				\WHILE temp \neq L.tail \DO
+					\BEGIN
+						tempPrevious \GETS temp\\
+						temp = tempNext \\
+						tempNext = temp.front \\
+						temp.front = tempPrevious \\
+					\END \\	
+			\ENDPROCEDURE
+		\end{pseudocode}
+	\end{solution}
+	\pagebreak
+	
+	\titledquestion{Exercise 3.8*}[5]
+	
+	Design a method {\tt rotate(r)} that ``rotates'' a DLList so that list item $i$ becomes list item $(i + r) \bmod n$. This method should run in $O(1 + \min\{r, n-r\})$ time and should not modify any nodes in the list.
+	\begin{solution}\\ \\
+		\begin{pseudocode}{DLList}{L, i, r}
+			\label{DLList}
+			\COMMENT{Rotates a DLList L such that every $ith$ element moves to $(i+r)\%len(L)th$ position.}\\
+			$Assuming that there is a dummy node named 'dummy' in the circular DLList L. The number of$\\ $iterations done (uni-directional) from \textit{dummy} all the way to \textit{dummy} determines the size of the L.$\\ \\
+%			$'n'. Moreover, assuming that 'r' is always positive.Since the (i+r)th position clock-wise implies$\\$the (n-(i+r))th position counter clock-wise, the following code will rotate the list only in counter$\\$clock-wise direction. Assuming that the nodes in L have 'front' and 'back' pointers which point$\\$towards the next and previous nodes in L respectively.$\\ \\ \\
+			\PROCEDURE{rotate}{r}
+			$r=r\%n$\\
+				\IF 
+					r \leq {n/2}-1 
+				\THEN
+					\BEGIN
+						\FOR i\GETS 0 \TO (r-1) \DO 
+							\BEGIN
+								dummy.back = dummy.back.back\\
+								dummy.back.front.front = dummy.front \\
+								dummy.front.back = dummy.back.front \\
+								dummy.front = dummy.back.front \\
+								dummy.back.front = dummy \\
+								dummy.front.back = dummy\\
+							\END\\ 
+					\END \\
+				\ELSE
+					\BEGIN
+						\FOR i\GETS 0 \TO (n-r-1) \DO 
+							\BEGIN
+								dummy.front = dummy.front.front\\
+								dummy.front.back.back = dummy.back \\
+								dummy.back.front = dummy.front.back \\
+								dummy.back = dummy.front.back \\
+								dummy.front.back = dummy \\
+								dummy.back.front = dummy\\
+							\END\\ 
+					\END \\ 
+			\ENDPROCEDURE
+		\end{pseudocode}
+	\end{solution}
+	\pagebreak
+	
+	\titledquestion{Exercise 3.19* (challenge)}[0]
+	
+	Show using pseudocode how the bitwise exclusive-or operator, \^{}, can be used to swap the values of two {\tt int} variables without using a third variable.
+	\begin{solution}\\ \\
+		\textbf{\textit{Assumptions:}} We assume that:\\1. The two variables containing integer values are not type-sensitive (just like \textit{Python} variables or 'auto' in \textit{C++}). \\2. There exists a method decimalToBinary(a) which takes a decimal value as input and returns a binary equivalent of \textit{a}. \\3. There exists a method binaryToDecimal(a) which takes a binary value as input and returns a decimal equivalent of \textit{a}.\\ \\ \\
+		\begin{pseudocode}{Swap}{first, second}
+			\label{Swap}
+			\COMMENT{Swaps the values of \underline{first} and \underline{second}.}\\
+			\PROCEDURE{swap}{first, second}
+				first \GETS decimalToBinary(first)\\
+				second \GETS decimalToBinary(second)\\ \\
+				first \GETS first \oplus second\\
+				second \GETS first \oplus second\\
+				first \GETS first \oplus second\\ \\
+				first \GETS binaryToDecimal(first)\\
+				second \GETS binaryToDecimal(second)\\
+			\ENDPROCEDURE
+			
+			\PROCEDURE{decimalToBinary}{number}
+				$//Checks if the number is decimal. Converts 'number' to binary and returns its binary$\\$equivalent. $\\
+			\ENDPROCEDURE
+			
+			\PROCEDURE{binaryToDecimal}{number}
+				$//Checks if the number is binary. Converts 'number' to decimal and returns its decimal$\\ $equivalent. $\\
+			\ENDPROCEDURE
+		\end{pseudocode}
+	\end{solution}
+	
+	
+	* - The question has been modified from the one in the book to exclude implementation. ``Design'' in a question here means to write pseudocode.
+	\end{questions}
+\end{document}
