@@ -19,8 +19,30 @@ Important contents of this repository:
   - Sorted set implemented in python
   - test cases to verify correct implementation
   - [Link to Repository](https://github.com/SamanGaziani188/Data-Structures/tree/master/sorted-set)
+  
+### Variations of Array, Deque, Single Linkedlist and Double Linkedlist
+  - Efficient add_all method for list implementation
+  - Rotate function that rotates the list a so that a[i] moves to a[(i+r)mod length(a)]
+  - Efficient variant of ArrayDeque
+  - reverse() method that reverses the order of elements in a Single linkedlist
+  - Roatate function that rotates a double linkedlist 
+  - Designing a pseudocode showing how the bitwise exclusive-or operator can be used to swap the values of two integer variables without using a third variable.
 
-- Implementation of MinDeque
+
+### Implementation of MinDeque
+  - Single Linkedlist implemented in python
+  - test cases to verify correct implementation
+  - [Link to Repository](https://github.com/SamanGaziani188/Data-Structures/tree/master/sorted-set)
+  
+### Implementation of Single Linkedlist
+  - Single Linkedlist implemented in python
+  - test cases to verify correct implementation
+  - [Link to Repository](https://github.com/SamanGaziani188/Data-Structures/tree/master/sorted-set)
+  
+### Implementation of Double Linkedlist
+  - Single Linkedlist implemented in python
+  - test cases to verify correct implementation
+  - [Link to Repository](https://github.com/SamanGaziani188/Data-Structures/tree/master/sorted-set)
 
 MinDeque data structure that can store comparable elements and supports all the deque operations add_first(x), add_last(x) remove_first(), remove_last() and size(), and the min() operation, which returns the minimum value currently stored in
 the data structure. All operations should run in constant amortized time.
