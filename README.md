@@ -31,7 +31,7 @@ Important contents of this repository:
 
 
 ### Implementation of MinDeque
-  - Single Linkedlist implemented in python
+  - Implementation of minDeque data structure that can store comparable elements and supports all the deque operations add_first(x), add_last(x), remove_first(), remove_last() and size(), and the min() operation, which returns the minimum value currently stored in the data structure. All operations should run in constant amortized time.
   - test cases to verify correct implementation
   - [Link to Repository](https://github.com/SamanGaziani188/Data-Structures/tree/master/mindeque)
   
@@ -45,8 +45,7 @@ Important contents of this repository:
   - test cases to verify correct implementation
   - [Link to Repository](https://github.com/SamanGaziani188/Data-Structures/tree/master/double-linkedlist)
 
-MinDeque data structure that can store comparable elements and supports all the deque operations add_first(x), add_last(x) remove_first(), remove_last() and size(), and the min() operation, which returns the minimum value currently stored in
-the data structure. All operations should run in constant amortized time.
+
 
 - - Implementation of Ordered Set
 - Dicussion on variations of Single and Double Linked lists 
