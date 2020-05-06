@@ -52,4 +52,21 @@ Important contents of this repository:
   - [Link to document]()
 
 ### Variations of Tries
-  -  
+  - Designing algorithm to delete from standard trie
+  - Designing algorithm for constructing the compact representation of a sux trie
+  - Computing the Euclidean normalized document vectors
+  - [Link to document]()
+  
+### Variations of Graphs
+  - Designing of algorithm to compute a connected graph in amortized time
+  - Designing an algorithm that tests if a graph has a universal sink
+  - Proving that if graph G is not connected graph then its complement H is a connected graph
+  - Topological Sort
+
+### Variation of Skiplist and Hashtable
+  - Modified find() method to reduce redundant comparisions
+  - Implementing a modified version of skiplist on sorted set interface
+  - Add() method for Linear Hashtable 
+  - Proofs for Hashtable function 
+
+### Implementation of Skiplist
