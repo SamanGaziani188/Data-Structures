@@ -69,6 +69,7 @@ Important contents of this repository:
   - Implementing a modified version of skiplist on sorted set interface
   - Add() method for Linear Hashtable 
   - Proofs for Hashtable function 
+  - [Link to document](https://github.com/SamanGaziani188/Data-Structures/tree/master/Documents/Variations-of-Skiplist-and-Hashtable)
 
 ### Implementation of Skiplist
   - Skiplist implemented in python 
