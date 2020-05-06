@@ -49,19 +49,20 @@ Important contents of this repository:
   - Designing a non-recursize method to compute the size of subtree rooted at any node
   - Pre/in/post-order traversal in a binary tree
   - left anf right rotations in binary search trees
-  - [Link to document]()
+  - [Link to document](https://github.com/SamanGaziani188/Data-Structures/tree/master/Documents/Variations-of-BST)
 
 ### Variations of Tries
   - Designing algorithm to delete from standard trie
   - Designing algorithm for constructing the compact representation of a sux trie
   - Computing the Euclidean normalized document vectors
-  - [Link to document]()
+  - [Link to document](https://github.com/SamanGaziani188/Data-Structures/tree/master/Documents/Variations-of-Tries)
   
 ### Variations of Graphs
   - Designing of algorithm to compute a connected graph in amortized time
   - Designing an algorithm that tests if a graph has a universal sink
   - Proving that if graph G is not connected graph then its complement H is a connected graph
   - Topological Sort
+  - [Link to document](https://github.com/SamanGaziani188/Data-Structures/tree/master/Documents/Variations-of-Graphs)
 
 ### Variation of Skiplist and Hashtable
   - Modified find() method to reduce redundant comparisions
@@ -70,3 +71,6 @@ Important contents of this repository:
   - Proofs for Hashtable function 
 
 ### Implementation of Skiplist
+  - Skiplist implemented in python 
+  - Test cases to verify correct implementation
+  - [Link to Repository](https://github.com/SamanGaziani188/Data-Structures/tree/master/skip-list)
