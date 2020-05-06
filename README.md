@@ -45,12 +45,11 @@ Important contents of this repository:
   - test cases to verify correct implementation
   - [Link to Repository](https://github.com/SamanGaziani188/Data-Structures/tree/master/double-linkedlist)
 
+### Variations of Binary Search Trees
+  - Designing a non-recursize method to compute the size of subtree rooted at any node
+  - Pre/in/post-order traversal in a binary tree
+  - left anf right rotations in binary search trees
+  - [Link to document]()
 
-
-- - Implementation of Ordered Set
-- Dicussion on variations of Single and Double Linked lists 
-- Implementation of Single Linked List
-- Implementation of Double Linked List
-- Dicussion on variations of search trees
-- Dicussion on variations of tries
-- 
+### Variations of Tries
+  -  
